@@ -8,6 +8,11 @@ import my.com.toru.hellogold.app.HelloGoldApp;
 public class PreferenceUtil {
     private static final String PREFERENCE_NAME = "HELLOGOLD_PREFERENCE";
 
+    public static final String EMAIL_ADDRESS = "EMAIL_ADDRESS";
+    public static final String API_TOKEN = "API_TOKEN";
+    public static final String PUBLIC_KEY = "PUBLIC_KEY";
+    public static final String ACCOUNT_NUMBER = "ACCOUNT_NUMBER";
+
     private static PreferenceUtil util;
 
     private SharedPreferences preferences;
@@ -27,10 +32,9 @@ public class PreferenceUtil {
         p.edit().clear().apply();
     }
 
-    public void getString(String key, String defValue){
+    public String getString(String key, String defValue){
         SharedPreferences p = preferences;
-        p.getString(key, defValue);
-        p.edit().apply();
+        return p.getString(key, defValue);
     }
 
     public void putString(String key, String value){
@@ -40,10 +44,9 @@ public class PreferenceUtil {
         editor.apply();
     }
 
-    public void getBoolean(String key, boolean defValue){
+    public boolean getBoolean(String key, boolean defValue){
         SharedPreferences p = preferences;
-        p.getBoolean(key, defValue);
-        p.edit().apply();
+        return p.getBoolean(key, defValue);
     }
 
     public void putBoolean(String key, boolean value){
@@ -53,10 +56,9 @@ public class PreferenceUtil {
         editor.apply();
     }
 
-    public void getInteger(String key, int defValue){
+    public int getInteger(String key, int defValue){
         SharedPreferences p = preferences;
-        p.getInt(key, defValue);
-        p.edit().apply();
+        return p.getInt(key, defValue);
     }
 
     public void putInteger(String key, int value){

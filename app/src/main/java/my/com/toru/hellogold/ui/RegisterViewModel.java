@@ -37,10 +37,10 @@ public class RegisterViewModel {
                     public void onReturn(RegisterResponse body) {
                         switch (body.getResult()){
                             case "ok":
-                                PreferenceUtil.getInstance().putString("EMAIL_ADDRESS", registration.getEmail());
-                                PreferenceUtil.getInstance().putString("API_TOKEN", body.getData().getApiToken());
-                                PreferenceUtil.getInstance().putString("PUBLIC_KEY", body.getData().getPublicKey());
-                                PreferenceUtil.getInstance().putString("ACCOUNT_NUMBER", body.getData().getAccountNumber());
+                                PreferenceUtil.getInstance().putString(PreferenceUtil.EMAIL_ADDRESS, registration.getEmail());
+                                PreferenceUtil.getInstance().putString(PreferenceUtil.API_TOKEN, body.getData().getApiToken());
+                                PreferenceUtil.getInstance().putString(PreferenceUtil.PUBLIC_KEY, body.getData().getPublicKey());
+                                PreferenceUtil.getInstance().putString(PreferenceUtil.ACCOUNT_NUMBER, body.getData().getAccountNumber());
                                 break;
 
                             case "error":
