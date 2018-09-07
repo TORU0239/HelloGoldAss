@@ -14,7 +14,14 @@ public abstract class RetryCallback<T> implements Callback<T> {
     public void onResponse(@NonNull Call<T> call,
                            @NonNull Response<T> response) {
         if(response.isSuccessful()){
-            onReturnSuccessResponse(response.body());
+            switch (response.code()){
+                case 200:
+                    onReturnSuccessResponse(response.body());
+                    break;
+                default:
+                    break;
+            }
+
         }
         else{
             if(callCount < 2){
@@ -43,5 +50,6 @@ public abstract class RetryCallback<T> implements Callback<T> {
     }
 
     public abstract void onReturnSuccessResponse(T body);
+    public abstract void onNeedToCheckResponse(T body);
     public abstract void onFailureResponse();
 }

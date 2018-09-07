@@ -6,7 +6,9 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import my.com.toru.hellogold.model.request.Registration;
+import my.com.toru.hellogold.model.response.RegisterResponse;
 import my.com.toru.hellogold.remote.RetrofitInitializer;
+import my.com.toru.hellogold.util.PreferenceUtil;
 import my.com.toru.hellogold.util.Util;
 
 public class RegisterViewModel {
@@ -17,21 +19,44 @@ public class RegisterViewModel {
         registration = new Registration();
     }
 
-    public void register(View v){
-        Log.w("VM", registration.toString());
+    public void register(final View v){
         if(isRegistrationValid()){
             if(Util.checkNetworkStatus(v.getContext())){
                 registration.setUuid(Util.generateUUID());
                 registration.setData(Util.generateRandom());
-                RetrofitInitializer.getinstance().createRegister(registration, new RetrofitInitializer.OnCallback() {
-                    @Override
-                    public void onReturn() {
 
+                if(registration.getTnc().equals("false")){
+                    Toast.makeText(v.getContext(), "Please check that TNC to agree with our policy.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Log.w("VM", registration.toString());
+
+                RetrofitInitializer.getinstance().createRegister(registration, new RetrofitInitializer.OnCallback<RegisterResponse>() {
+                    @Override
+                    public void onReturn(RegisterResponse body) {
+                        switch (body.getResult()){
+                            case "ok":
+                                PreferenceUtil.getInstance().putString("EMAIL_ADDRESS", registration.getEmail());
+                                PreferenceUtil.getInstance().putString("API_TOKEN", body.getData().getApiToken());
+                                PreferenceUtil.getInstance().putString("PUBLIC_KEY", body.getData().getPublicKey());
+                                PreferenceUtil.getInstance().putString("ACCOUNT_NUMBER", body.getData().getAccountNumber());
+                                break;
+
+                            case "error":
+                                break;
+
+                            default:
+                                break;
+                        }
                     }
 
                     @Override
-                    public void onFailed() {
+                    public void onNeedCheck(RegisterResponse body) {}
 
+                    @Override
+                    public void onFailed() {
+                        Toast.makeText(v.getContext(), "Please check your network status.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

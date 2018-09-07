@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import my.com.toru.hellogold.BuildConfig;
 import my.com.toru.hellogold.model.request.Registration;
+import my.com.toru.hellogold.model.response.RegisterResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,6 +19,8 @@ public final class RetrofitInitializer {
     private static final int READ_TIMEOUT = 5000;
     private static final int WRITE_TIMEOUT = 5000;
     private static final String BASE_URL = "https://staging.hellogold.com/api/";
+
+    private static final String REGISTER_URL = "v3/users/register.json";
 
     private static RetrofitInitializer initializer;
 
@@ -52,12 +55,17 @@ public final class RetrofitInitializer {
         return initializer;
     }
 
-    public void createRegister(@NonNull Registration registration, @NonNull final OnCallback callback){
-        retrofit.create(RegistrationService.class).getRegistration("v3/users/register.json", registration)
-                .enqueue(new RetryCallback<ResponseBody>() {
+    public void createRegister(@NonNull Registration registration, @NonNull final OnCallback<RegisterResponse> callback){
+        retrofit.create(RegistrationService.class).getRegistration(REGISTER_URL, registration)
+                .enqueue(new RetryCallback<RegisterResponse>() {
                     @Override
-                    public void onReturnSuccessResponse(ResponseBody body) {
-                        callback.onReturn();
+                    public void onReturnSuccessResponse(RegisterResponse body) {
+                        callback.onReturn(body);
+                    }
+
+                    @Override
+                    public void onNeedToCheckResponse(RegisterResponse body) {
+                        callback.onNeedCheck(body);
                     }
 
                     @Override
@@ -67,8 +75,9 @@ public final class RetrofitInitializer {
                 });
     }
 
-    public interface OnCallback{
-        void onReturn();
+    public interface OnCallback<T>{
+        void onReturn(T body);
+        void onNeedCheck(T body);
         void onFailed();
     }
 }
