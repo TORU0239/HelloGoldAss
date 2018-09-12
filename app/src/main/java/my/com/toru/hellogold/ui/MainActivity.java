@@ -2,7 +2,6 @@ package my.com.toru.hellogold.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onReturn(SpotPrice body) {
                         AppDatabase.getAppDatabase(MainActivity.this).dataDao().insertEachData(body.getData());
                         adapter.getGoldDataList().add(0, body.getData());
-                        DiffUtil.
                         adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }
@@ -74,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        swipeRefresh.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
+//        swipeRefresh.setColorSchemeResources(
+//                android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light
+//        );
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
