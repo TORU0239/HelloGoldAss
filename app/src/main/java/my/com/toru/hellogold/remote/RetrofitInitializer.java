@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import my.com.toru.hellogold.BuildConfig;
 import my.com.toru.hellogold.model.request.Registration;
 import my.com.toru.hellogold.model.response.RegisterResponse;
+import my.com.toru.hellogold.model.response.SpotPrice;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -75,15 +76,15 @@ public final class RetrofitInitializer {
                 });
     }
 
-    public void createSpotPrice(@NonNull final OnCallback<ResponseBody> callback){
-        retrofit.create(SpotPriceService.class).getSpotPrice().enqueue(new RetryCallback<ResponseBody>() {
+    public void createSpotPrice(@NonNull final OnCallback<SpotPrice> callback){
+        retrofit.create(SpotPriceService.class).getSpotPrice().enqueue(new RetryCallback<SpotPrice>() {
             @Override
-            public void onReturnSuccessResponse(ResponseBody body) {
+            public void onReturnSuccessResponse(SpotPrice body) {
                 callback.onReturn(body);
             }
 
             @Override
-            public void onNeedToCheckResponse(ResponseBody body) {
+            public void onNeedToCheckResponse(SpotPrice body) {
                 callback.onNeedCheck(body);
             }
 
