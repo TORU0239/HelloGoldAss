@@ -9,7 +9,7 @@ public class Registration extends BaseObservable{
     private String email = "";
     private String uuid = "";
     private String data = "";
-    private String tnc = "";
+    private String tnc = "false";
 
     public Registration(String email, String uuid, String data, String tnc) {
         this.email = email;

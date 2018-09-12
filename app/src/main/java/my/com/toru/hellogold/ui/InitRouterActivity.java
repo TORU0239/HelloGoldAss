@@ -16,7 +16,7 @@ public class InitRouterActivity extends AppCompatActivity {
 
     private void routing(){
         Intent intent = new Intent(InitRouterActivity.this, MainActivity.class);
-        if(!PreferenceUtil.getInstance().getString(PreferenceUtil.EMAIL_ADDRESS, "").equals("")){
+        if(PreferenceUtil.getInstance().getString(PreferenceUtil.EMAIL_ADDRESS, "").equals("")){
             intent = new Intent(InitRouterActivity.this, RegisterActivity.class);
         }
         startActivity(intent);

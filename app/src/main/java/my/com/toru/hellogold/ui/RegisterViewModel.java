@@ -1,5 +1,6 @@
 package my.com.toru.hellogold.ui;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -41,9 +42,12 @@ public class RegisterViewModel {
                                 PreferenceUtil.getInstance().putString(PreferenceUtil.API_TOKEN, body.getData().getApiToken());
                                 PreferenceUtil.getInstance().putString(PreferenceUtil.PUBLIC_KEY, body.getData().getPublicKey());
                                 PreferenceUtil.getInstance().putString(PreferenceUtil.ACCOUNT_NUMBER, body.getData().getAccountNumber());
+
+                                v.getContext().startActivity(new Intent(v.getContext(), MainActivity.class));
                                 break;
 
                             case "error":
+                                Toast.makeText(v.getContext(), "Error Happened!!", Toast.LENGTH_SHORT).show();
                                 break;
 
                             default:
