@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.nio.charset.Charset;
 import java.util.Random;
 
+import my.com.toru.hellogold.util.PreferenceUtil;
 import my.com.toru.hellogold.util.Util;
 
 import static org.junit.Assert.*;
@@ -47,5 +48,10 @@ public class ExampleUnitTest {
         String generatedString = buffer.toString();
 
         System.out.println(generatedString);
+    }
+
+    @Test
+    public void checkEmailPreference(){
+        assertEquals("", PreferenceUtil.getInstance().getString(PreferenceUtil.EMAIL_ADDRESS, ""));
     }
 }

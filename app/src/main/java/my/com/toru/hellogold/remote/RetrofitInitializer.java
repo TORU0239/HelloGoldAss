@@ -75,6 +75,25 @@ public final class RetrofitInitializer {
                 });
     }
 
+    public void createSpotPrice(@NonNull final OnCallback<ResponseBody> callback){
+        retrofit.create(SpotPriceService.class).getSpotPrice().enqueue(new RetryCallback<ResponseBody>() {
+            @Override
+            public void onReturnSuccessResponse(ResponseBody body) {
+                callback.onReturn(body);
+            }
+
+            @Override
+            public void onNeedToCheckResponse(ResponseBody body) {
+                callback.onNeedCheck(body);
+            }
+
+            @Override
+            public void onFailureResponse() {
+                callback.onFailed();
+            }
+        });
+    }
+
     public interface OnCallback<T>{
         void onReturn(T body);
         void onNeedCheck(T body);
