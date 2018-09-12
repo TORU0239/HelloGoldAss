@@ -11,7 +11,7 @@ import my.com.toru.hellogold.model.response.Data;
 
 @Dao
 public interface PriceDao {
-    @Query("SELECT * FROM priceData")
+    @Query("SELECT * FROM priceData ORDER BY timestamp DESC")
     List<Data> getAll();
 
     @Query("SELECT COUNT(*) from priceData")

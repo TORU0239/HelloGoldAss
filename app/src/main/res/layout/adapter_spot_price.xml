@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/gold_buy_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Buy: 100"/>
+
+    <TextView
+        android:id="@+id/gold_sell_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="Sell: 100"/>
+
+    <TextView
+        android:id="@+id/gold_spot_price_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="Spot Price: 100"/>
+
+    <TextView
+        android:id="@+id/timestamp_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="TIMESTAMP: "/>
+
+</LinearLayout>
