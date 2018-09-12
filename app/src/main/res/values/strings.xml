@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">HelloGold</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="format_buy" translatable="false">Buy: %.3f</string>
+    <string name="format_sell" translatable="false">Sell: %.3f</string>
+    <string name="format_spot_price" translatable="false">Spot Price: %.3f</string>
 </resources>

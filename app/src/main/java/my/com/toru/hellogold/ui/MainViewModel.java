@@ -51,47 +51,52 @@ public class MainViewModel {
         adapter.setGoldDataList(dataList);
         adapter.notifyDataSetChanged();
         toolbarEmail.set(PreferenceUtil.getInstance().getString(PreferenceUtil.EMAIL_ADDRESS, ""));
+        onFetchData();
     }
 
     public SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            onStartFetchData();
-            RetrofitInitializer.getinstance().createSpotPrice(new RetrofitInitializer.OnCallback<SpotPrice>() {
-                @Override
-                public void onReturn(SpotPrice body) {
-                    onSuccessFetchData(body);
-                }
-
-                @Override
-                public void onNeedCheck(SpotPrice body) {
-                    onNeedCheckData();
-                }
-
-                @Override
-                public void onFailed() {
-                    onErrorData();
-                }
-            });
+            onFetchData();
         }
     };
 
-    public void onStartFetchData(){
+    private void onFetchData(){
+        onStartFetchData();
+        RetrofitInitializer.getinstance().createSpotPrice(new RetrofitInitializer.OnCallback<SpotPrice>() {
+            @Override
+            public void onReturn(SpotPrice body) {
+                onSuccessFetchData(body);
+            }
+
+            @Override
+            public void onNeedCheck(SpotPrice body) {
+                onNeedCheckData();
+            }
+
+            @Override
+            public void onFailed() {
+                onErrorData();
+            }
+        });
+    }
+
+    private void onStartFetchData(){
         isRefreshing.set(true);
     }
 
-    public void onSuccessFetchData(SpotPrice body){
+    private void onSuccessFetchData(SpotPrice body){
         isRefreshing.set(false);
         AppDatabase.getAppDatabase(HelloGoldApp.getApp().getApplicationContext()).dataDao().insertEachData(body.getData());
         adapter.getGoldDataList().add(0, body.getData());
         adapter.notifyDataSetChanged();
     }
 
-    public void onNeedCheckData(){
+    private void onNeedCheckData(){
         isRefreshing.set(false);
     }
 
-    public void onErrorData(){
+    private void onErrorData(){
         isRefreshing.set(false);
     }
 }
